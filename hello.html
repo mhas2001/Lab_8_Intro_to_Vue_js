@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello Vue</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+    <!-- All the page (front end) that vue will manage/interact with will go here (Render to users) -->
+
+    <h1>Hello Vue!</h1>
+
+    <p>Original Message: {{message}}</p>
+    <p>New with exclamation: {{messageWithExclamationPoints}}</p>
+
+    <h2>This class is {{thisClass}}</h2>
+
+    <!-- same as button onClick= {} on react -->
+    <button v-on:click="addExclamation">Add !</button>
+
+    <!-- Clear button -->
+    <button v-on:click="clearExclamation">Clear Exclamation points</button>
+</div>
+
+<!-- Vue app -->
+<script>
+    let app = Vue.createApp({
+        data() {
+            return {
+                message:
+                    'Hello, I am a message from the Vue data method, being rendered into the main app',
+                thisClass: 'Web Programming',
+                maxCounter: 10,
+                counter: 0,
+            };
+        },
+
+        methods: {
+            addExclamation() {
+                if (this.counter < this.maxCounter) {
+                    // Counter
+                    this.counter++;
+                } else {
+                    alert('You used up max 10 add exclamation button!');
+                }
+            },
+
+            clearExclamation() {
+                if (this.counter >= 1) {
+                    this.reset(); // Call reset if the counter for add btn is greater or equal to 1
+                } else {
+                    alert('You have not used any add exclamation button!');
+                }
+            },
+
+            // Reset field
+            reset() {
+                // Reset counter
+                this.counter = 0;
+            },
+        },
+        // Computed needs to be in root level of app
+        computed: {
+            messageWithExclamationPoints() {
+                let messageWithPoints = this.message;
+
+                for (let x = 0; x < this.counter; x++) {
+                    messageWithPoints = messageWithPoints + '!';
+                }
+
+                return messageWithPoints;
+            },
+        },
+    });
+
+    app.mount('#app'); // export app?
+</script>
+</body>
+</html>

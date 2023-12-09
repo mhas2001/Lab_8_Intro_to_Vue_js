@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue Forms</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+  <h1>Hello Vue Forms!</h1>
+  <br />
+
+  <label for="userNameTextBox">Please Enter Your Name: </label>
+  <input v-model="userNameTextBox" id="userNameTextBox" />
+
+  <!-- If users name is equal to or more than 2, show clear btn and name -->
+  <p v-if="userNameTextBox.length >=2">
+    Hello, {{userNameTextBox}}
+    <button v-if="userNameTextBox.length >=2" v-on:click="clearName">
+      Clear input
+    </button>
+  </p>
+
+  <p v-else>Waiting for name input...</p>
+</div>
+<script>
+  let app = Vue.createApp({
+    data() {
+      return {
+        userNameTextBox: '', // Needs to be users name typed in
+      };
+    },
+    methods: {
+      clearName() {
+        this.userNameTextBox = '';
+      },
+    },
+  });
+
+  app.mount('#app');
+</script>
+</body>
+</html>

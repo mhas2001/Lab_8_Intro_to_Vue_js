@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create task list</title>
+</head>
+<body>
+<!-- Input container -->
+<div class="inputsContainer">
+    <!-- Text Area -->
+    <label for="textAreaInput">please enter your to-do task:</label>
+    <input type="text" id="usersTextArea" />
+
+    <!-- empty unordered list -->
+
+    <br />
+    <div class="unorderedListSecton">
+        <label for="unorderedListLabel">Task list</label>
+        <ul id="unorderedListClass"></ul>
+    </div>
+
+    <!-- Button  -->
+    <!-- On click, the text from the text area should be added to the unordered list -->
+    <button id="submitBTN">Submit</button>
+
+    <!-- Clear btn -->
+    <button id="clearBTN">Clear</button>
+
+    <!-- End of input container -->
+</div>
+
+<!-- Script JS -->
+<script>
+    // Getting the btn
+    const buttonSubmit = document.getElementById('submitBTN');
+
+    //   Get the text area
+
+    let usersText = document.getElementById('usersTextArea');
+
+    //   Get list
+    const list = document.getElementById('unorderedListClass');
+
+    //   Adding event listener when clicked
+
+    buttonSubmit.addEventListener('click', function () {
+        //get the text value from the text input
+        let text = usersText.value.trim();
+
+        // If text is less than or equal than 0, alert
+        if (text.length <= 0) {
+            alert('Need text!');
+        }
+
+        // Add to the list if greater than 0 and less than or equal to 50
+
+        if (text.length > 0 && text.length <= 50) {
+            // No more than 10 list items
+            if (list.childElementCount < 10) {
+                // Create a list element to document
+                const listElementAdd = document.createElement('li');
+
+                // Add the text content to the list element
+                listElementAdd.textContent = text;
+
+                // Add the li to the ul using append method
+                list.append(listElementAdd);
+
+                // Clear input
+                usersText.value = '';
+
+                // if have more than 10 list items
+            } else {
+                alert(`You have ${list.childElementCount}, Only 10 items on list!`);
+            }
+
+            // If text length is more than 50 characters
+        } else if (text.length > 50) {
+            alert('Text needs to be less than 50 characters');
+        }
+    });
+
+    // Clear list button
+    const clearButton = document.getElementById('clearBTN');
+
+    clearButton.addEventListener('click', function () {
+        // clear the list elements
+        list.innerHTML = '';
+    });
+</script>
+</body>
+</html>

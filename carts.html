@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue Shopping Cart</title>
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <style>
+    td,
+    th {
+      width: 25%;
+      text-align: center;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!-- Render Data to users here -->
+  <table>
+    <tr>
+      <th>Items</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Total (With 8% Tax)</th>
+    </tr>
+
+    <tr>
+      <td>{{productName}}</td>
+      <td>{{unitPrice}}</td>
+      <!-- Todo - Add input -->
+      <td>
+        <input type="number" v-model.number="quantity" id="quantityInput" />
+
+        <div class="error" v-if="quantityError">{{quantityError}}</div>
+      </td>
+
+      <td>
+        <div v-if="quantityError">Invalid quantity</div>
+        <div v-else>${{figureOutMyTotal}}</div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<script>
+  let app = Vue.createApp({
+    // App has access to these properties globally
+    data() {
+      return {
+        productName: 'Hat',
+        unitPrice: '4.99',
+        quantity: 0,
+        maxQuantity: 21,
+        quantityError: '',
+      };
+    },
+
+    // Computed property, will render updated total state based on the app's data of quantity and unit price property
+    computed: {
+      figureOutMyTotal() {
+        if (!Number.isInteger(this.quantity)) {
+          this.quantityError = 'Quantity needs to be a valid number!';
+
+          this.quantity = this.quantityError;
+        } else if (this.quantity < 0 || this.quantity > this.maxQuantity) {
+          this.quantityError = 'Quantity of only 0 and 21!';
+        }
+        // Clear error message else
+        else {
+          this.quantityError = '';
+        }
+
+        let subTotal = this.unitPrice * this.quantity;
+
+        let tax = subTotal * 0.08;
+
+        let t = subTotal + tax;
+        return t.toFixed(2);
+      },
+    },
+  });
+
+  app.mount('#app'); // export app
+</script>
+</body>
+</html>
